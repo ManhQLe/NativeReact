@@ -1,9 +1,16 @@
 import React from'react'
 
-import {View,Text} from 'react-native'
+import { StyleSheet, View,Text,Slider} from 'react-native'
 
 export default function UdacitySlider () {
-    return <View>
-        <Text>Slider</Text>
+    
+    return <View style={styles.container}>
+        <Text>Test</Text>
     </View>
 }
+
+const styles = StyleSheet.create({
+    container:{
+        
+    }
+})

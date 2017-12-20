@@ -1,9 +1,16 @@
 import React,{Component} from 'react'
-import {View,Text} from 'react-native'
-import {getMetricMetaInfo} from '../utils/helpers'
+import {View,Text, TouchableHighlight} from 'react-native'
+import {getMetricMetaInfo, timeToString} from '../utils/helpers'
 import UdacitySlider from './UdacitySlider'
 import UdacityStepper from './UdacityStepper'
 import DateHeader from './DateHeader'
+
+function SubmitBtn({onPress}){
+    return <TouchableHighlight onPress={onPress}>
+            <Text>Submit</Text>
+        </TouchableHighlight>
+}
+
 export default class AddEntry extends Component{
     state={
         run:0,
@@ -38,6 +45,24 @@ export default class AddEntry extends Component{
         })
     }
 
+    submit = ()=>{
+        const key = timeToString();
+        const entry = this.state;
+
+        this.setState({
+            run:0,
+            bike:0,
+            swim:0,
+            sleep:0,
+            eat:0
+        });
+
+        // Update redux
+
+        //Navigate to home
+
+    }
+
     render(){
         const metaInfo = getMetricMetaInfo();
         return (
@@ -62,6 +87,7 @@ export default class AddEntry extends Component{
                     })
 
                 }
+                <SubmitBtn onPress={this.submit}/>
             </View>
         )
     }
