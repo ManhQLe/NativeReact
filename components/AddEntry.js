@@ -4,6 +4,8 @@ import {getMetricMetaInfo, timeToString} from '../utils/helpers'
 import UdacitySlider from './UdacitySlider'
 import UdacityStepper from './UdacityStepper'
 import DateHeader from './DateHeader'
+import  {Ionicons} from '@expo/vector-icons'
+import TextButton from './TextButton'
 
 function SubmitBtn({onPress}){
     return <TouchableHighlight onPress={onPress}>
@@ -25,7 +27,7 @@ export default class AddEntry extends Component{
         this.setState(state=>{
             const count = state[metric] + step;
             return {                
-                [metric]:Math.max(count,max)
+                [metric]:Math.min(count,max)
             }            
         })
     }
@@ -39,7 +41,7 @@ export default class AddEntry extends Component{
         })
     }
 
-    slice = (metric,value) =>{
+    slide = (metric,value) =>{
         this.setState({
             [metric]: value
         })
@@ -63,8 +65,25 @@ export default class AddEntry extends Component{
 
     }
 
+    reset=()=>{
+        const key = timeToString()
+
+    }
+
     render(){
         const metaInfo = getMetricMetaInfo();
+        if(this.props.alreadyLogged=true){
+            return (
+                <View>
+                    <Ionicons name='ios-happy-outline' size={100}/>
+                    <Text>You already logged your information today.</Text>
+                    <TextButton onPress={this.reset}>
+                        Reset
+                    </TextButton>
+                </View>
+            )
+        }
+
         return (
             <View>
                 <DateHeader date={(new Date()).toLocaleDateString()}/>
@@ -76,8 +95,17 @@ export default class AddEntry extends Component{
                             {getIcon()}
                             {
                                 type==='slider'
-                                ?<UdacitySlider value={value} onChange={(v)=>this.slide(key,value)}/>
+                                ?<UdacitySlider 
+                                    value={value} 
+                                    onChange={(v)=>this.slide(key,v)}
+                                    max={rest.max}
+                                    step={rest.step}
+                                    unit={rest.unit}
+                                />
                                 :<UdacityStepper value={value} 
+                                    max={rest.max}
+                                    step={rest.step}
+                                    unit={rest.unit}
                                     onIncrement={v=>this.increment(key)}
                                     onDecrement={v=>this.decrement(key)}
                                 />                                
