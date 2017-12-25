@@ -76,7 +76,7 @@ export default class AddEntry extends Component{
                             {getIcon()}
                             {
                                 type==='slider'
-                                ?<UdacitySlider value={value} onchange={(v)=>this.slide(key,value)}/>
+                                ?<UdacitySlider value={value} onChange={(v)=>this.slide(key,value)}/>
                                 :<UdacityStepper value={value} 
                                     onIncrement={v=>this.increment(key)}
                                     onDecrement={v=>this.decrement(key)}
