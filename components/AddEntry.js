@@ -7,6 +7,9 @@ import DateHeader from './DateHeader'
 import  {Ionicons} from '@expo/vector-icons'
 import TextButton from './TextButton'
 import {submitEntry,removeEntry} from '../utils/api'
+import {getDailyReminderValue} from '../utils/helpers'
+import {connect} from 'react-redux'
+import {addEntry} from '../actions'
 
 function SubmitBtn({onPress}){
     return <TouchableHighlight onPress={onPress}>
@@ -14,7 +17,7 @@ function SubmitBtn({onPress}){
         </TouchableHighlight>
 }
 
-export default class AddEntry extends Component{
+class AddEntry extends Component{
     state={
         run:0,
         bike:0,
@@ -52,6 +55,11 @@ export default class AddEntry extends Component{
         const key = timeToString();
         const entry = this.state;
 
+        // Update redux
+        this.props.dispatch(addEntry({
+            [key]: entry
+        }))
+
         this.setState({
             run:0,
             bike:0,
@@ -60,7 +68,8 @@ export default class AddEntry extends Component{
             eat:0
         });
 
-        // Update redux
+
+
         submitEntry({key,entry})
         //Navigate to home
 
@@ -69,11 +78,15 @@ export default class AddEntry extends Component{
     reset=()=>{
         const key = timeToString()
         removeEntry(key)
+
+        this.props.dispatch(addEntry({
+            [key]:getDailyReminderValue()
+        }))
     }
 
     render(){
         const metaInfo = getMetricMetaInfo();
-        if(this.props.alreadyLogged=false){
+        if(this.props.alreadyLogged){
             return (
                 <View>
                     <Ionicons name='ios-happy-outline' size={100}/>
@@ -122,3 +135,11 @@ export default class AddEntry extends Component{
     }
 }
 
+function mapStateToProps(state){
+    const key = timeToString();
+    return {
+        alreadyLogged: state[key] && typeof state[key].today === 'undefined'
+    }
+}
+
+export default connect(mapStateToProps)(AddEntry);
