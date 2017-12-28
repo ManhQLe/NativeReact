@@ -1,12 +1,11 @@
 import React from 'react';
 import {red} from './utils/colors'
+import {createStore} from 'redux'
+import {Provider} from 'react-redux'
+import reducer from './reducers'
+
 import { 
-	StyleSheet, Text, View,
-	TouchableHighlight,
-	TouchableNativeFeedback,
-	TouchableOpacity,
-	TouchableWithoutFeedback,
-	Slider
+	StyleSheet,  View
 	
 } from 'react-native';
 import AddEntry from './components/AddEntry'
@@ -17,9 +16,11 @@ export default class App extends React.Component {
 
 	render() {
 		return (
+			<Provider store={createStore(reducer)}>
 			<View style={styles.container}>
 				<AddEntry/>		
 			</View>
+			</Provider>
 		);
 	}
 }
@@ -30,15 +31,6 @@ const styles = StyleSheet.create({
 		backgroundColor: '#2ecc71',
 		alignItems: 'stretch',
 		justifyContent: 'center',
-	},
-	btn:{
-		backgroundColor:red,
-		padding:18,
-		justifyContent:'center',
-		alignItems:'center',
-		borderRadius:5,
-	},
-	bntText:{
-		color:"#fff"
 	}
+	
 });

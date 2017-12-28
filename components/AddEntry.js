@@ -73,7 +73,7 @@ export default class AddEntry extends Component{
 
     render(){
         const metaInfo = getMetricMetaInfo();
-        if(this.props.alreadyLogged=true){
+        if(this.props.alreadyLogged=false){
             return (
                 <View>
                     <Ionicons name='ios-happy-outline' size={100}/>
