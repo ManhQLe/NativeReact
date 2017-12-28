@@ -6,6 +6,7 @@ import UdacityStepper from './UdacityStepper'
 import DateHeader from './DateHeader'
 import  {Ionicons} from '@expo/vector-icons'
 import TextButton from './TextButton'
+import {submitEntry,removeEntry} from '../utils/api'
 
 function SubmitBtn({onPress}){
     return <TouchableHighlight onPress={onPress}>
@@ -60,14 +61,14 @@ export default class AddEntry extends Component{
         });
 
         // Update redux
-
+        submitEntry({key,entry})
         //Navigate to home
 
     }
 
     reset=()=>{
         const key = timeToString()
-
+        removeEntry(key)
     }
 
     render(){
