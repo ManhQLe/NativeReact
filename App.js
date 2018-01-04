@@ -17,9 +17,9 @@ export default class App extends React.Component {
 	render() {
 		return (
 			<Provider store={createStore(reducer)}>
-			<View style={styles.container}>
-				<AddEntry/>		
-			</View>
+				<View style={styles.container}>
+					<AddEntry/>		
+				</View>
 			</Provider>
 		);
 	}
@@ -30,7 +30,10 @@ const styles = StyleSheet.create({
 		flex: 1,
 		backgroundColor: '#2ecc71',
 		alignItems: 'stretch',
-		justifyContent: 'center',
+		paddingLeft:10,
+		paddingRight:10,
+		paddingTop:20,
+		justifyContent: 'flex-start',
 	}
 	
 });
