@@ -3,7 +3,7 @@ import {red} from './utils/colors'
 import {createStore} from 'redux'
 import {Provider} from 'react-redux'
 import reducer from './reducers'
-
+import History from './components/history'
 import { 
 	StyleSheet,  View
 	
@@ -18,7 +18,8 @@ export default class App extends React.Component {
 		return (
 			<Provider store={createStore(reducer)}>
 				<View style={styles.container}>
-					<AddEntry/>		
+					<History/>
+					{/* <AddEntry/>		 */}
 				</View>
 			</Provider>
 		);
