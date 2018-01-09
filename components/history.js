@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import { Text, View } from 'react-native'
 import { connect } from 'react-redux'
 import { receiveEntries, addEntry } from '../actions'
-import { timeToString, getDailyReninderValue, getDailyReminderValue } from '../utils/helpers'
+import { timeToString, getDailyReminderValue } from '../utils/helpers'
 import { fetchCalendarResults } from '../utils/api'
+import UdaciFitnessCalendar from 'udacifitness-calendar'
 
 class History extends Component {
     componentDidMount() {
@@ -20,14 +21,37 @@ class History extends Component {
             })
     }
 
-    render() {
+    renderItem=(x,formattedDate,key)=>{
+        const {today,...metrics} = x;
+
         return <View>
-            <Text>{JSON.stringify(this.props)}</Text>
+            {
+                today
+                ? <Text>{JSON.stringify(today)}</Text>    
+                : <Text>{JSON.stringify(metrics)}</Text>    
+            }
         </View>
+    }
+
+    renderEmptyDate(formattedDate){
+        return (
+            <View>
+                <Text>No data for this day</Text>
+            </View>
+        )
+    }
+
+    render() {
+        const {entries} = this.props
+        return <UdaciFitnessCalendar items={entries}
+            renderItem={this.renderItem}
+            renderEmptyDate={this.renderEmptyDate}/>
+       
     }
 }
 
 function mapStateToProps(entries){
+ 
     return {
         entries
     }
