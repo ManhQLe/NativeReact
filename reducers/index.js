@@ -5,7 +5,7 @@ export default function entries(state={},action){
         case RECEIVE_ENTRIES:
             return {
                 ...state,
-                ...action.entry
+                ...action.entries
             };
         case ADD_ENTRY:
             return{
