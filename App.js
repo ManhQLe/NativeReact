@@ -3,7 +3,7 @@ import {red,white, purple} from './utils/colors'
 import {createStore} from 'redux'
 import {Provider} from 'react-redux'
 import reducer from './reducers'
-import History from './components/history'
+import History from './components/History'
 import EntryDetail from './components/EntryDetail'
 import { 
 	StyleSheet,  View, Platform, StatusBar
@@ -68,7 +68,7 @@ const MainNavigator = StackNavigator({
 		screen:Tabs,
 
 	},
-	AddDetail:{
+	EntryDetail:{
 		screen:EntryDetail,
 		navigationOptions:{
 			headerTintColor:white,
@@ -86,7 +86,7 @@ export default class App extends React.Component {
 			<Provider store={createStore(reducer)}>
 				<View style={styles.container}>
 					<UdaciStatusBar backgroundColor={purple} barStyle='light-content'/>
-					<Tabs/>				
+					<MainNavigator/>			
 					
 				</View>
 			</Provider>
