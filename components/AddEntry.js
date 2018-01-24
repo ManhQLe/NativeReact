@@ -11,7 +11,7 @@ import {getDailyReminderValue} from '../utils/helpers'
 import {connect} from 'react-redux'
 import {addEntry} from '../actions'
 import {white,purple} from '../utils/colors'
-
+import {NavigationAction, NavigationActions} from 'react-navigation'
 
 const styles=StyleSheet.create({
     iosSubmitBtn:{
@@ -116,11 +116,16 @@ class AddEntry extends Component{
             eat:0
         });
 
-
+        this.toHome();
 
         submitEntry({key,entry})
-        //Navigate to home
+        //Navigate to home        
+    }
 
+    toHome=()=>{
+        this.props.navigation.dispatch(NavigationActions.back({
+            key:'AddEntry'
+        }))
     }
 
     reset=()=>{
@@ -130,6 +135,7 @@ class AddEntry extends Component{
         this.props.dispatch(addEntry({
             [key]:getDailyReminderValue()
         }))
+        this.toHome();
     }
 
     render(){
