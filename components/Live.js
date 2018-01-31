@@ -4,15 +4,46 @@ import { View, Text, ActivityIndicator, TouchableOpacity, StyleSheet } from 'rea
 import { Foundation } from '@expo/vector-icons'
 import { purple, white } from '../utils/colors'
 
+import {Location,Permissions} from 'expo'
+import {calculateDirection} from '../utils/helpers'
+
 export default class Live extends Component {
     state = {
         coords: null,
-        status: 'granted',
+        status: null,
         direction: ''
     }
 
     askPermission = () => {
 
+    }
+    
+    setLocation=()=>{
+        Location.watchPositionAsync({
+            enableHighAccuracy:true,
+            timeInterval:1,
+            distanceInterval:1
+        },(coords)=>{
+            const newDirection = calculateDirection(coords.heading)
+            const {direction} = this.state
+
+            this.setState({coords,status:'granted',direction:newDirection})
+        })
+    }
+
+    componentDidMount(){
+        Permissions.getAsync(Permissions.LOCATION)
+        .then(({status})=>{
+            if(status=== 'granted'){
+                return this.setLocation()
+            }
+
+            this.setState(()=>({status:'granted'}))
+        })
+        .catch((ex)=>{
+            console.warn('Error getting location permission',ex);
+            this.setState(()=>({status:'undertermined'}))
+        })
     }
 
     render() {
