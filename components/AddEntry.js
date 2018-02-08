@@ -1,6 +1,6 @@
 import React,{Component} from 'react'
 import {View,Text, TouchableHighlight,StyleSheet, Platform} from 'react-native'
-import {getMetricMetaInfo, timeToString} from '../utils/helpers'
+import {clearLocalNotification,setLocalNotification,  getMetricMetaInfo, timeToString} from '../utils/helpers'
 import UdacitySlider from './UdacitySlider'
 import UdacityStepper from './UdacityStepper'
 import DateHeader from './DateHeader'
@@ -12,6 +12,8 @@ import {connect} from 'react-redux'
 import {addEntry} from '../actions'
 import {white,purple} from '../utils/colors'
 import {NavigationAction, NavigationActions} from 'react-navigation'
+
+
 
 const styles=StyleSheet.create({
     iosSubmitBtn:{
@@ -120,6 +122,9 @@ class AddEntry extends Component{
 
         submitEntry({key,entry})
         //Navigate to home        
+
+        clearLocalNotification()
+        .then(setLocalNotification)
     }
 
     toHome=()=>{

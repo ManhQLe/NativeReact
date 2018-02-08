@@ -169,12 +169,8 @@ export function getDailyReminderValue(){
 	}
 }
 
-export function getDailyReminderValue(){
-
-}
-
 export function clearLocalNotification(){
-	AsyncStorage.clear(NOTIFICATION_KEY)
+	return AsyncStorage.clear(NOTIFICATION_KEY)
 	.then(Notifications.cancelAllScheduledNotificationsAsync)
 }
 
